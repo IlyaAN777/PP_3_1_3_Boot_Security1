@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+
+<h2>Users</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th> Surname</th>
+        <th>Password</th>
+        <th>User name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.surname}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.username}"></td>
+
+        <td><a th:href="@{update/{id}(id=${user.id})}">Edit</a></td>
+        <td><a th:href="@{delete/{id}(id=${user.id})}">Delete</a></td>
+
+    </tr>
+    </tbody>
+</table>
+</div>
+<p><a href="/create">Create</a></p>
+</div>
+<br><br>
+<form th:action="@{/logout}">
+    <input type="submit" value="Log Out">
+</form>
+</body>
+</html>

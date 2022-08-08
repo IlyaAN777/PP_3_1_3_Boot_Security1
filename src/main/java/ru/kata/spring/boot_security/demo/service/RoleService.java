@@ -7,6 +7,6 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import java.util.List;
 import java.util.Set;
 
-public interface RoleService {
+public interface RoleService  {
   List<Role>getAllRoles();
 }
