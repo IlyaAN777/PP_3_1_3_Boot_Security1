@@ -3,14 +3,12 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.List;
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     private UserService userService;
@@ -20,44 +18,47 @@ public class AdminController {
         this.userService = userService;
     }
 
-
-    @GetMapping("/admin")
-    public String allUsers(Model model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
-        return "users";
-    }
-    @GetMapping("/create")
-    public String createUserForm(User user){
-        return "create";
+    @GetMapping
+    public String userList(Model model) {
+        model.addAttribute("userList", userService.allUsers());
+        model.addAttribute("user", new User());
+        return "admin";
     }
 
-    @PostMapping("/create")
-    public String saveUser(User user){
-        userService.saveUser(user);
-        return "redirect:/users";
-    }
-
-    @GetMapping("delete/{id}")
-    public String deleteUser(@PathVariable("id") long id){
-        userService.deleteById(id);
-        return "redirect:/users";
-    }
-
-    @GetMapping("/update/{id}")
-    public String updateUserForm(@PathVariable("id") long id, Model model){
-       User user = userService.getUserById(id);
+    @GetMapping("/user-create")
+    public String createUserForm(Model model) {
+        User user = new User();
         model.addAttribute("user", user);
-        return "update";
+        return "user-create";
     }
 
-    @PostMapping("/update")
-    public String updateUser(User user){
+    @PostMapping("/user-create")
+    public String createUser(User user) {
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
+    @DeleteMapping("/user-delete/{id}")
+    public String removeUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return "redirect:/admin";
+    }
 
+    @GetMapping("/user-details/{id}")
+    public String userDetailsPage(@PathVariable("id") long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
+        return "user-details";
+    }
 
+    @GetMapping("/user-update/{id}")
+    public String updateUserDetailsPage(@PathVariable("id") long id, Model model) {
+        model.addAttribute("user", userService.findById(id));
+        return "user-update";
+    }
 
+    @PatchMapping("/user-update")
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/admin";
+    }
 }
