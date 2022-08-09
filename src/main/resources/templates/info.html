@@ -2,27 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User page</title>`
+    <title>User info</title>`
 </head>
-
-<style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-    }
-
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-</style>
 <body>
-<h1>User page</h1>
+<h2>User info</h2>
 
 <table>
     <tr>
@@ -38,14 +21,6 @@
         <th th:text="${user.getLastname()}"></th>
     </tr>
     <tr>
-        <th>Age</th>
-        <th th:text="${user.getAge()}"></th>
-    </tr>
-    <tr>
-        <th>Email</th>
-        <th th:text="${user.getEmail()}"></th>
-    </tr>
-    <tr>
         <th>Username</th>
         <th th:text="${user.getUsername()}"></th>
     </tr>
@@ -59,11 +34,11 @@
 </body>
 <br><br>
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-    <form th:method="GET" th:action="@{/admin/user-update/{id}/(id=${user.getId()})}">
+    <form th:method="GET" th:action="@{/admin/update/{id}/(id=${user.getId()})}">
         <input type="submit" value="Edit">
     </form>
     <br>
-    <form th:method="DELETE" th:action="@{/admin/user-delete/{id}(id=${user.getId()})}">
+    <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId()})}">
         <input type="submit" value="Delete">
     </form>
     <br>

@@ -21,10 +21,6 @@ public class User implements UserDetails {
     private String firstname;
     @Column(name = "last_name")
     private String lastname;
-    @Column(name = "age")
-    private Byte age;
-    @Column(name = "email")
-    private String email;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -39,13 +35,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String firstname, String lastname, Byte age,
-                String email, String username, String password, Set<Role> roles) {
+    public User(Long id, String firstname, String lastname,
+                 String username, String password, Set<Role> roles) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.age = age;
-        this.email = email;
         this.username = username;
         this.password = password;
         this.roles = roles;
@@ -73,22 +67,6 @@ public class User implements UserDetails {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public Byte getAge() {
-        return age;
-    }
-
-    public void setAge(Byte age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {

@@ -18,6 +18,8 @@ public class AdminController {
         this.userService = userService;
     }
 
+
+
     @GetMapping
     public String userList(Model model) {
         model.addAttribute("userList", userService.allUsers());
@@ -25,38 +27,50 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/user-create")
-    public String createUserForm(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        return "user-create";
+//    @GetMapping("/user-create")
+//    public String createUserForm(Model model) {
+//        User user = new User();
+//        model.addAttribute("user", user);
+//        return "user-create";
+//    }
+//
+//    @PostMapping("/user-create")
+//    public String createUser(User user) {
+//        userService.saveUser(user);
+//        return "redirect:/admin";
+//    }
+
+    @GetMapping("/create")
+    public String createUserForm(User user){
+        return "create";
     }
 
-    @PostMapping("/user-create")
-    public String createUser(User user) {
+    @PostMapping("/create")
+    public String saveUser(User user){
         userService.saveUser(user);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/user-delete/{id}")
+
+    @DeleteMapping("/delete/{id}")
     public String removeUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/user-details/{id}")
+    @GetMapping("/info/{id}")
     public String userDetailsPage(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "user-details";
+        return "info";
     }
 
-    @GetMapping("/user-update/{id}")
+    @GetMapping("/update/{id}")
     public String updateUserDetailsPage(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.findById(id));
-        return "user-update";
+        return "update";
     }
 
-    @PatchMapping("/user-update")
+    @PatchMapping("/update")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
         return "redirect:/admin";

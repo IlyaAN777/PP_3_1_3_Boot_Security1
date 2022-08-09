@@ -10,7 +10,7 @@ public interface UserServ extends UserDetailsService {
 
     void saveUser(User user);
 
-    void deleteUser(long userId);
+    void deleteUser(Long userId);
     User findById(long id);
 
     User getCurrentUser();
