@@ -10,21 +10,21 @@
 <table>
     <thead>
     <tr>
-        <th >ID</th>
+        <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Username</th>
         <th>Password</th>
-        <th>Operations</th>
+
     </thead>
 
 
     <tr th:each="user : ${userList}">
-        <td  th:text="${user.id}"/>
-        <td  th:text="${user.firstname}"/>
-        <td  th:text="${user.lastname}"/>
-        <td  th:text="${user.username}"/>
-        <td  th:text="${user.password}"/>
+        <td th:text="${user.id}"/>
+        <td th:text="${user.firstname}"/>
+        <td th:text="${user.lastname}"/>
+        <td th:text="${user.username}"/>
+        <td th:text="${user.password}"/>
         <td>
             <form th:method="GET" th:action="@{/admin/info/{id}(id=${user.getId()})}">
                 <input type="submit" value="Info"/>
@@ -39,7 +39,9 @@
 </form>
 <br>
 <form th:method="GET" th:action="@{/logout}">
-    <input type="submit" value="Log Out">
+    <input type="submit" value="Sign Out">
 </form>
+
+
 </body>
 </html>

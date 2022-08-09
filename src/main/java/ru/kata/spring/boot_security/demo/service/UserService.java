@@ -9,9 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
-
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,7 +19,7 @@ public class UserService implements UserServ {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
-
+private RoleRepository roleRepository;
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -29,6 +28,49 @@ public class UserService implements UserServ {
     @Autowired
     public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+@Autowired
+    public void setRoleRepository(RoleRepository roleRepository){
+        this.roleRepository = roleRepository;
+    }
+
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User getUserById(long id) {
+        return userRepository.findById(id).orElse(new User());
+    }
+
+    @Override
+    public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
+    public void deleteById(Long id) {
+        if (userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+        }
+    }
+
+
+    public void updateUser(User user) {
+        if (user.getPassword().equals(getUserById(user.getId()).getPassword())) {
+            userRepository.save(user);
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public List<Role> roleList() {
+        return roleRepository.findAll();
     }
 
     @Override
@@ -41,38 +83,11 @@ public class UserService implements UserServ {
         return user;
     }
 
-    public User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-
-    public List<User> allUsers() {
-        return userRepository.findAll();
-    }
 
 
-    public void saveUser(User user) {
-        user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-
-    public void deleteUser(Long userId) {
-        if (userRepository.findById(userId).isPresent()) {
-            userRepository.deleteById(userId);
-        }
-    }
-
-    public User findById(long id) {
-        return userRepository.findById(id).orElse(new User());
-    }
-
-
-    public void updateUser(User user) {
-        if (user.getPassword().equals(findById(user.getId()).getPassword())) {
-            userRepository.save(user);
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-        }
-    }
 }
+
+//    @Override
+//    public List<Role> roleList() {
+//        return roleRepository.findAll();
+//    }

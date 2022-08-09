@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8">
+    "
     <title>Create user</title>
 </head>
 <body>
@@ -10,16 +11,10 @@
 
     <label for="name">Name</label>
     <input type="text" th:field="*{firstname}" id="name" placeholder="Name">
-    <br>
-    <br>
     <label for="surname">Surname</label>
     <input type="text" th:field="*{lastname}" id="surname" placeholder="Surname">
-    <br>
-    <br>
     <label for="username">username</label>
     <input type="text" th:field="*{username}" id="username" placeholder="Username">
-    <br>
-    <br>
     <label for="password">Password</label>
     <input type="text" th:field="*{password}" id="password" placeholder="Password">
     <br>
@@ -28,7 +23,7 @@
 </form>
 <br><br>
 <form th:action="@{/logout}">
-    <input type="submit" value="Log Out">
+    <input type="submit" value="Sign Out">
 </form>
 </body>
 </html>

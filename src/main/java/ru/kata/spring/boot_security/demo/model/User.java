@@ -15,19 +15,18 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
-    @Column(name = "first_name")
+
     private String firstname;
-    @Column(name = "last_name")
+
     private String lastname;
-    @Column(name = "username")
+
     private String username;
-    @Column(name = "password")
+
     private String password;
 
     @ManyToMany
-    @JoinTable(name = "users_roles",
+    @JoinTable(name = "authorities",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles;

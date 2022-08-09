@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>User page</title>
 </head>
@@ -18,15 +17,15 @@
         </thead>
 
         <tr th:each="user:${user}">
-            <td style="border: 2px solid black" th:text="${user.id}"></td>
-            <td style="border: 2px solid black" th:text="${user.firstname}"></td>
-            <td style="border: 2px solid black" th:text="${user.lastname}"></td>
-            <td style="border: 2px solid black" th:text="${user.username}"></td>
+            <td  th:text="${user.id}"></td>
+            <td  th:text="${user.firstname}"></td>
+            <td  th:text="${user.lastname}"></td>
+            <td  th:text="${user.username}"></td>
         </tr>
     </table>
     <br><br>
     <form th:action="@{/logout}">
-        <input type="submit" value="Log Out">
+        <input type="submit" value="Sign Out">
     </form>
 </div>
 
