@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +10,8 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -19,7 +20,8 @@ public class UserService implements UserServ {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
-private RoleRepository roleRepository;
+    private RoleRepository roleRepository;
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -29,14 +31,12 @@ private RoleRepository roleRepository;
     public void setPasswordEncoder(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-@Autowired
-    public void setRoleRepository(RoleRepository roleRepository){
+
+    @Autowired
+    public void setRoleRepository(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
 
-    public User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -46,11 +46,19 @@ private RoleRepository roleRepository;
         return userRepository.findById(id).orElse(new User());
     }
 
-    @Override
+
     public void saveUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        User userFromDB = userRepository.findByUsername(user.getUsername());
+
+        if (userFromDB == null) {
+
+
+            user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+        }
     }
+
 
     public void deleteById(Long id) {
         if (userRepository.findById(id).isPresent()) {
@@ -68,10 +76,6 @@ private RoleRepository roleRepository;
         }
     }
 
-    @Override
-    public List<Role> roleList() {
-        return roleRepository.findAll();
-    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -84,10 +88,5 @@ private RoleRepository roleRepository;
     }
 
 
-
 }
 
-//    @Override
-//    public List<Role> roleList() {
-//        return roleRepository.findAll();
-//    }
