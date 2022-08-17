@@ -14,14 +14,17 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
-
+    @Column(name = "first_name")
     private String firstname;
-
+    @Column(name = "last_name")
     private String lastname;
-
+    @Column(name = "age")
+    private int age;
+    @Column(name = "email")
     private String username;
-
+    @Column(name = "password")
     private String password;
 
 
@@ -34,14 +37,22 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(Long id, String firstname, String lastname,
-                String username, String password, Set<Role> roles) {
+    public User(Long id, String firstname, String lastname, int age, String username, String password, Set<Role> roles) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.age = age;
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Long getId() {
@@ -88,6 +99,13 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public String getRolesName() {
+        StringBuilder stringBuilder = new StringBuilder();
+        roles.forEach(role -> stringBuilder.append(role).append(" "));
+        return stringBuilder.toString();
+    }
+
+
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
@@ -117,4 +135,16 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age=" + age +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }

@@ -15,6 +15,6 @@ public class UserController {
     @GetMapping("/user")
     public String index(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
-        return "user";
+        return "user-info";
     }
 }

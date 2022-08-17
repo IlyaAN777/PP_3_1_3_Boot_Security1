@@ -17,5 +17,7 @@ public interface UserServ extends UserDetailsService {
 
     void updateUser(User user);
 
+    User getUserByUsername(String username);
+
 
 }
