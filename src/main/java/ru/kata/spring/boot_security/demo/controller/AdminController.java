@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 
 import java.security.Principal;
+import java.util.List;
 
 
 @Controller
@@ -29,6 +30,8 @@ public class AdminController {
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
     }
+
+
 
 
     @PostMapping("/create")
