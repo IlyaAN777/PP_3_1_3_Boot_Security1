@@ -1,13 +1,12 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,11 +25,38 @@ public class MyRestController {
         this.roleService = roleService;
     }
 
-        @GetMapping(name = "/users")
-    public List<User> getAllUsers(){
-     return    userService.getAllUsers();
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable int id) {
+        User user = userService.getUserById(id);
+        return user;
+    }
 
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user) {
+        userService.saveUser(user);
+        return user;
+    }
+
+    @PutMapping("/users")
+    public User updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+        return user;
+    }
+
+    @DeleteMapping("/users/{id}")
+    public void removeUser(@PathVariable long id) {
+        userService.deleteById(id);
+
+    }
+
+    @GetMapping("/user")
+    public User userInfo(Principal principal) {
+        return userService.getUserByUsername(principal.getName());
+    }
 
 }

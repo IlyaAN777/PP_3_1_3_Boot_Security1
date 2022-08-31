@@ -30,15 +30,5 @@ public class RoleService implements RoleServ {
         return roleRepository.findAll();
     }
 
-    @Override
-    public Set<Role> findRolesByName(String roleName) {
-        Set<Role> roles = new HashSet<>();
-        for (Role role : getAllRoles()) {
-            if (roleName.contains(role.getRole()))
-                roles.add(role);
-        }
-        return roles;
-    }
-
 
 }

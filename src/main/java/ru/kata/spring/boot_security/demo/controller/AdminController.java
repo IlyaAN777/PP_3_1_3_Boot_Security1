@@ -34,12 +34,12 @@ public class AdminController {
 
 
 
-    @PostMapping("/create")
-    public String createUser(User user, String roleId) {
-        user.setRoles(roleService.findRolesByName(roleId));
-        userService.saveUser(user);
-        return "redirect:/admin";
-    }
+//    @PostMapping("/create")
+//    public String createUser(User user, String roleId) {
+//        user.setRoles(roleService.findRolesByName(roleId));
+//        userService.saveUser(user);
+//        return "redirect:/admin";
+//    }
 
 
     @GetMapping
@@ -54,24 +54,29 @@ public class AdminController {
     }
 
 
-    @PostMapping("/update")
-    public String updateUser(@ModelAttribute User user, String roleId) {
-        user.setRoles(roleService.findRolesByName(roleId));
-        userService.updateUser(user);
-        return "redirect:/admin";
-    }
+//    @PostMapping("/update")
+//    public String updateUser(@ModelAttribute User user, String roleId) {
+//        user.setRoles(roleService.findRolesByName(roleId));
+//        userService.updateUser(user);
+//        return "redirect:/admin";
+//    }
+//
+//    @DeleteMapping("/delete/{id}")
+//    public String removeUser(@PathVariable("id") Long Id) {
+//        userService.deleteById(Id);
+//        return "redirect:/admin";
+//    }
 
-    @DeleteMapping("/delete/{id}")
-    public String removeUser(@PathVariable("id") Long Id) {
-        userService.deleteById(Id);
-        return "redirect:/admin";
-    }
 
-
-    @GetMapping("/adminInf")
+    @GetMapping("/admin-page")
     public String index(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user", user);
         return "admin-info";
     }
+
+
+
+
+
 
 }
