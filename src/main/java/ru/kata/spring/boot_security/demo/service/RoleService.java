@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
+
 public class RoleService implements RoleServ {
 
     private RoleRepository roleRepository;
@@ -24,7 +24,7 @@ public class RoleService implements RoleServ {
         this.roleRepository = roleRepository;
     }
 
-
+    @Transactional
     @Override
     public List<Role> getAllRoles() {
         return roleRepository.findAll();

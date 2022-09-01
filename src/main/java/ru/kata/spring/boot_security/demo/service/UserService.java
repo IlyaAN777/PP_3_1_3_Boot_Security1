@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-@Transactional
+
 public class UserService implements UserServ {
 
     private UserRepository userRepository;
@@ -38,16 +38,16 @@ public class UserService implements UserServ {
         this.roleRepository = roleRepository;
     }
 
-
+    @Transactional
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-
+    @Transactional
     public User getUserById(long id) {
         return userRepository.findById(id).orElse(new User());
     }
 
-
+    @Transactional
     public void saveUser(User user) {
         User userFromDB = userRepository.findByUsername(user.getUsername());
 
@@ -60,14 +60,14 @@ public class UserService implements UserServ {
         }
     }
 
-
+    @Transactional
     public void deleteById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             userRepository.deleteById(id);
         }
     }
 
-
+    @Transactional
     public void updateUser(User user) {
         if (user.getPassword().equals(getUserById(user.getId()).getPassword())) {
             userRepository.save(user);
@@ -76,14 +76,14 @@ public class UserService implements UserServ {
             userRepository.save(user);
         }
     }
-
+    @Transactional
     @Override
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
 
     }
 
-
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
