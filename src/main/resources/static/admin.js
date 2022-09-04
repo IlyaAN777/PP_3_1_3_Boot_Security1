@@ -1,5 +1,3 @@
-
-
 let result = ''
 
 fetch('/api/user')
@@ -7,20 +5,18 @@ fetch('/api/user')
     .then(user => {
 
             result += `
-                <tr>
+                        <tr>
                         <td>${user.id}</td>
                         <td>${user.firstname}</td>
                         <td>${user.lastname}</td>
                         <td>${user.age}</td>
                         <td>${user.username}</td>
                         <td>${user.rolesName}</td>
-                </tr>
+                        </tr>
 `
             document.getElementById('userInfo').innerHTML = result;
         }
     )
-
-
 
 
 $(document).ready(function () {
@@ -42,17 +38,15 @@ function getAllUsers() {
                 <td>${user.username}</td>
                 <td>${user.rolesName}</td>
                 <td><button type="button" class="btn btn-info" data-toggle="modal"
-                onclick="updateUser('${user.id}')">Edit</button></td>      
-                <td><button type="button" class="btn btn-danger" data-toggle="modal" 
-                onclick="deleteUser('${user.id}')">Delete</button></td>      
+                onclick="updateUser('${user.id}')">Edit</button></td>
+                <td><button type="button" class="btn btn-danger" data-toggle="modal"
+                onclick="deleteUser('${user.id}')">Delete</button></td>
                 `
             })
             document.querySelector('#allUsers tbody').innerHTML = temp
             temp = ''
         })
 }
-
-
 
 
 function addNewUser() {
@@ -217,18 +211,19 @@ function updateUser(id) {
                                                     <input id="editAge" type="number" class="form-control" value="${user.age}" name="age" >
                                                 </div>
                                                 <div class="form-group"><label for="editUsername"><b>Email</b></label>
-                                                    <input id="editUsername" type="text" class="form-control" value="${user.username}" name="email">
+                                                    <input  id="editUsername"  type="text"  class="form-control " value="${user.username}" name="email"  >
                                                 </div>
                                                 <div class="form-group"><label for="editPassword"><b>Password</b></label>
                                                     <input id="editPassword" type="password" class="form-control" name="password" value="${user.password}">
                                                 </div>
-                                                <div class="form-group"><label for="editRole"><b>Role</b></label>
-                                                    <select id="editRole" multiple class="form-control" size="2" name="roles" id="select2"> 
-                                                        <option value="ROLE_ADMIN">ADMIN</option>
+                                                <div class="form-group"><label for="editRole" ><b>Role</b></label>
+                                                    <select required = "required" id="editRole" multiple  class="form-control"  size="2" name="roles"  id="select2"" > 
+                                                       <option  value="ROLE_ADMIN">ADMIN</option>
                                                         <option value="ROLE_USER">USER</option>
-                                                    </select>
+                                                    </select>   
+                                                                                         
                                                 </div>
-                                            </form>
+                                            </form>                                                           
                                         </div>
                                         <div class="col-sm-3"></div>
                                     </div>
@@ -236,19 +231,28 @@ function updateUser(id) {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" onclick="updateSubmit()" data-dismiss="modal">Edit</button>
+                                <button  type="submit" class="btn btn-primary " onclick="updateSubmit()" data-dismiss="modal">Edit</button>
                             </div>
                         </div>
                     </div>
                 </div>
             `
+
             document.getElementById('modal').innerHTML = tempModal
             $("#updateuser").modal()
+
+
         })
-        .then(() => {
-            getAllUsers()
-        })
+
+
+    .then(() => {
+
+
+    })
+
+
 }
+
 
 function updateSubmit() {
     let id = document.getElementById('editId').value
@@ -258,6 +262,7 @@ function updateSubmit() {
     let username = document.getElementById('editUsername').value
     let password = document.getElementById('editPassword').value
     let roles = $('[id="editRole"]').val()
+
 
     for (let i = 0; i < roles.length; i++) {
         if (roles[i] === 'ROLE_ADMIN') {
@@ -274,10 +279,12 @@ function updateSubmit() {
         }
     }
 
+
     fetch('/api/users', {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json;charset=UTF-8'
+
         },
         body: JSON.stringify({
             id,
@@ -289,9 +296,10 @@ function updateSubmit() {
             'roles': roles
         })
     })
+
         .then(() => {
             getAllUsers()
         })
-}
 
+}
 

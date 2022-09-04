@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,7 @@ public class Role implements GrantedAuthority {
 
     @Column(name = "role")
     private String role;
+
 
 
     public Role() {
@@ -55,6 +57,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return role.replace("ROLE_", " ");
+        return role.replace("ROLE_", "");
     }
 }
