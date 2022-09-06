@@ -211,14 +211,14 @@ function updateUser(id) {
                                                     <input id="editAge" type="number" class="form-control" value="${user.age}" name="age" >
                                                 </div>
                                                 <div class="form-group"><label for="editUsername"><b>Email</b></label>
-                                                    <input  id="editUsername"  type="text"  class="form-control " value="${user.username}" name="email"  >
+                                                    <input  id="editUsername"  type="text"  class="form-control " value="${user.username}" name="email" required >
                                                 </div>
                                                 <div class="form-group"><label for="editPassword"><b>Password</b></label>
                                                     <input id="editPassword" type="password" class="form-control" name="password" value="${user.password}">
                                                 </div>
                                                 <div class="form-group"><label for="editRole" ><b>Role</b></label>
-                                                    <select required = "required" id="editRole" multiple  class="form-control"  size="2" name="roles"  id="select2"" > 
-                                                       <option  value="ROLE_ADMIN">ADMIN</option>
+                                                    <select required id="editRole"  multiple  class="form-control"  size="2" name="roles"  id="select2"" > 
+                                                       <option  value="ROLE_ADMIN"selected>ADMIN</option>
                                                         <option value="ROLE_USER">USER</option>
                                                     </select>   
                                                                                          
@@ -231,7 +231,7 @@ function updateUser(id) {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button  type="submit" class="btn btn-primary " onclick="updateSubmit()" data-dismiss="modal">Edit</button>
+                                <button  type="submit" class="btn btn-primary "  onclick="updateSubmit()"  data-dismiss="modal">Edit</button>
                             </div>
                         </div>
                     </div>
@@ -245,13 +245,10 @@ function updateUser(id) {
         })
 
 
-    .then(() => {
-
-
-    })
 
 
 }
+
 
 
 function updateSubmit() {
@@ -278,6 +275,10 @@ function updateSubmit() {
             }
         }
     }
+
+
+
+
 
 
     fetch('/api/users', {
