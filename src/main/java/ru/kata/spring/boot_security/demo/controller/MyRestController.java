@@ -59,5 +59,6 @@ public class MyRestController {
     public User userInfo(Principal principal) {
         return userService.getUserByUsername(principal.getName());
     }
-
+    int i;
+    int sfd;
 }
